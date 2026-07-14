@@ -1,0 +1,23 @@
+{
+  "name": "mermaid-selection-preview",
+  "version": "0.6.0",
+  "private": true,
+  "type": "module",
+  "description": "Chrome extension for previewing selected Mermaid source from the context menu.",
+  "scripts": {
+    "assets": "node scripts/generate-icons.mjs",
+    "build": "node scripts/build.mjs",
+    "package": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/package.ps1",
+    "test": "node --test",
+    "test:e2e": "node scripts/e2e.mjs",
+    "check": "npm run assets && npm run test && npm run build && npm run test:e2e"
+  },
+  "dependencies": {
+    "@plantuml/core": "^1.2026.6",
+    "mermaid": "^11.12.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.6",
+    "playwright-core": "^1.53.2"
+  }
+}

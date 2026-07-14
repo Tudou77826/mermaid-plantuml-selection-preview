@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>图表选区预览</title>
+    <link rel="stylesheet" href="preview.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand" aria-label="图表选区预览">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <div>
+            <p class="eyebrow">SELECTION / RENDER</p>
+            <h1>图表选区预览</h1>
+          </div>
+        </div>
+        <div class="actions">
+          <button id="fit-button" class="button button-subtle" type="button">适应窗口</button>
+          <button id="copy-button" class="button button-accent" type="button">复制 SVG</button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="canvas-panel" aria-labelledby="canvas-title">
+          <div class="panel-heading">
+            <div>
+              <span class="status-dot" aria-hidden="true"></span>
+              <h2 id="canvas-title">图表</h2>
+            </div>
+            <p id="diagram-meta">等待渲染</p>
+          </div>
+          <div id="diagram-viewport" class="diagram-viewport">
+            <div id="diagram" class="diagram" aria-live="polite">
+              <div class="loader" aria-label="正在渲染"><span></span><span></span><span></span></div>
+            </div>
+          </div>
+          <div id="error-panel" class="error-panel" hidden role="alert">
+            <p class="error-label">RENDER ERROR</p>
+            <h2>这段选区暂时无法渲染</h2>
+            <pre id="error-message"></pre>
+            <p class="error-help">请确认选中了完整图表。支持 Mermaid、PlantUML、puml 和 uml 代码围栏，也支持直接选择图表正文。</p>
+          </div>
+        </section>
+
+        <aside class="source-panel" aria-labelledby="source-title">
+          <div class="panel-heading">
+            <div>
+              <span class="status-dot status-dot-source" aria-hidden="true"></span>
+              <h2 id="source-title">解析后的源码</h2>
+            </div>
+            <p id="source-meta">0 字符</p>
+          </div>
+          <pre class="source-code"><code id="source-code"></code></pre>
+          <footer>
+            <span>所有处理均在本机完成</span>
+            <kbd>Esc</kbd><span>关闭</span>
+          </footer>
+        </aside>
+      </main>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="viz-global.js"></script>
+    <script type="module" src="preview.js"></script>
+  </body>
+</html>

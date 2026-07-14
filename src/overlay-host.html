@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8"><title>Overlay test host</title>
+    <style>
+      body { margin: 0; color: #213027; background: #f5f7f4; font: 15px/1.7 "Microsoft YaHei", sans-serif; }
+      main { max-width: 980px; margin: 48px auto; padding: 0 28px; }
+      h1 { font-size: 30px; }
+      p { color: #5d6c63; }
+      pre { margin-top: 28px; padding: 24px; color: #dcebe1; background: #17241d; border-radius: 8px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>系统设计说明</h1>
+      <p>页面内容在预览图表时应保持可见，让用户明确自己仍处于原始文档上下文中。</p>
+      <pre>sequenceDiagram
+  actor U as 用户
+  participant A as 应用
+  U-&gt;&gt;A: 打开预览
+  A--&gt;&gt;U: 返回图表</pre>
+    </main>
+    <script src="viz-global.js"></script>
+    <script src="overlay.js"></script>
+    <script src="plantuml-overlay.js"></script>
+  </body>
+</html>
