@@ -1,15 +1,17 @@
 # Mermaid & PlantUML 选区预览
 
-一个本地渲染 Mermaid 与 PlantUML 的 Chrome 扩展。选中网页中的图表源码，点击右键菜单，即可在当前页面浮层中预览，无需离开原文档。
+一个在 Chrome 当前页面中本地预览 Mermaid 与 PlantUML 的扩展。选中图表源码后，可以通过右键菜单、扩展图标或快捷键打开预览；即使网站屏蔽右键，也不必离开原文档。
 
 [下载安装包](https://github.com/Tudou77826/mermaid-plantuml-selection-preview/releases/latest) · [完整使用说明](docs/USAGE.md) · [隐私政策](PRIVACY.md) · [Chrome 网上应用店](https://chromewebstore.google.com/detail/ahonaanmkbgmcbjlhfgpfleigbmedmlh)
 
 ![Mermaid 页内浮层预览](docs/images/mermaid-overlay.png)
 
+图表显示在原页面上方的轻量浮层中，可以缩放、拖动和自动适应窗口。
+
 ## 功能
 
 - 自动识别 Mermaid 与 PlantUML。
-- 页面没有原生右键菜单时，可点击扩展图标读取选区；读取失败时直接粘贴源码。
+- 页面没有原生右键菜单时，可点击扩展图标或按快捷键读取选区；读取失败时可以直接粘贴源码。
 - 支持包含或不包含 Markdown 代码围栏的选区。
 - 在原页面上方显示轻量浮层，不跳转页面。
 - 支持滚轮缩放、鼠标拖动、双击适应窗口和键盘快捷键。
@@ -34,14 +36,40 @@
 
 ## 使用
 
-1. 在网页中选中 Mermaid 或 PlantUML 源码。
-2. 点击右键菜单“预览 Mermaid / PlantUML 图”，或直接点击扩展图标。
-3. 在浮层中查看、缩放或拖动图表。
-4. 点击浮层外区域、关闭按钮或按 `Esc` 退出。
+### 1. 选中图表源码
 
-页面无法提供标准选区时，扩展图标会打开一个极简粘贴框；粘贴源码后按 `Ctrl+Enter` 即可预览。也可以使用 `Ctrl+Shift+M` 打开同一入口，并在 `chrome://extensions/shortcuts` 中修改快捷键。
+在网页中完整选中一段 Mermaid 或 PlantUML 源码。选区可以包含 Markdown 代码围栏，也可以只包含图表正文。
 
-常用快捷键：
+````markdown
+```mermaid
+flowchart LR
+  A[选中图表源码] --> B[触发扩展]
+  B --> C[在当前页面预览]
+```
+````
+
+PlantUML 可以选中完整的 `@startuml` 到 `@enduml`，也可以选择缺少这两个标记的正文，扩展会自动补齐。
+
+### 2. 选择一个入口
+
+| 页面情况 | 推荐操作 |
+| --- | --- |
+| 页面可以正常打开右键菜单 | 右键选区，点击“预览 Mermaid / PlantUML 图” |
+| 页面屏蔽了右键菜单 | 点击浏览器工具栏中的扩展图标 |
+| 希望只用键盘操作 | 按 `Ctrl+Shift+M`，可在 `chrome://extensions/shortcuts` 中修改 |
+| 扩展无法读取页面选区 | 在扩展图标打开的输入框中粘贴源码，按 `Ctrl+Enter` |
+
+点击扩展图标时，扩展会先尝试读取当前页面以及可访问 iframe 中的选区。读取成功会直接打开预览；读取不到选区时才显示粘贴框。
+
+![无法读取选区时的粘贴入口](docs/images/action-fallback.png)
+
+### 3. 查看和调整图表
+
+预览浮层不会跳转到其他页面。可以直接缩放和移动图表，查看完成后点击浮层外区域、关闭按钮或按 `Esc` 退出。
+
+![PlantUML 页内浮层预览](docs/images/plantuml-overlay.png)
+
+常用操作：
 
 | 操作 | 鼠标或键盘 |
 | --- | --- |
@@ -49,20 +77,30 @@
 | 移动画布 | 按住鼠标拖动 |
 | 适应窗口 | 双击画布或按 `0` |
 | 恢复 100% | `1` |
-| 关闭预览 | `Esc` |
+| 关闭预览 | 点击浮层外区域、关闭按钮或按 `Esc` |
 
-输入可以包含代码围栏：
+### 支持的源码形式
 
-````markdown
-```mermaid
-flowchart LR
-  A[选中文本] --> B[右键预览]
-```
-````
-
-也可以只选中图表正文。PlantUML 支持 `plantuml`、`puml`、`uml` 围栏；缺少 `@startuml` 和 `@enduml` 时会自动补齐。
+- Mermaid 正文，以及 `mermaid` Markdown 围栏。
+- PlantUML 正文，以及 `plantuml`、`puml`、`uml` Markdown 围栏。
+- 带围栏但没有选中结尾围栏的 Mermaid 源码。
+- 缺少 `@startuml` 和 `@enduml` 的 PlantUML 正文。
 
 更多示例、限制与故障排查见 [使用说明](docs/USAGE.md)。
+
+### 常见问题
+
+**点击扩展图标后没有直接显示图表**
+
+确认选区包含完整图表。部分网页使用特殊编辑器，浏览器无法读取其选区；此时扩展会显示粘贴框，可以手动粘贴源码。
+
+**`Ctrl+Shift+M` 没有反应**
+
+打开 `chrome://extensions/shortcuts`，确认快捷键已经分配且没有与其他扩展冲突。Chrome 内部页面和 Chrome 应用商店页面不允许普通扩展执行页面脚本。
+
+**本地 HTML 页面无法使用扩展**
+
+在扩展详情页启用“允许访问文件网址”，或者通过本地 HTTP 服务打开该页面。
 
 ## 隐私与安全
 

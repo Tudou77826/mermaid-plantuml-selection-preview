@@ -31,6 +31,7 @@ try {
   assert.match(extensionId, /^[a-p]{32}$/);
 
   const actionPage = await context.newPage();
+  await actionPage.setViewportSize({ width: 392, height: 472 });
   await actionPage.goto(`chrome-extension://${extensionId}/action.html`);
   const manualForm = actionPage.locator("#manual-form");
   await manualForm.waitFor({ state: "visible" });
