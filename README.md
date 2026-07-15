@@ -9,11 +9,12 @@
 ## 功能
 
 - 自动识别 Mermaid 与 PlantUML。
+- 页面没有原生右键菜单时，可点击扩展图标读取选区；读取失败时直接粘贴源码。
 - 支持包含或不包含 Markdown 代码围栏的选区。
 - 在原页面上方显示轻量浮层，不跳转页面。
 - 支持滚轮缩放、鼠标拖动、双击适应窗口和键盘快捷键。
 - Mermaid 与 PlantUML 全部在浏览器本地渲染，不上传源码。
-- 只在用户主动点击选区右键菜单后临时访问当前页面。
+- 只在用户主动点击右键菜单、扩展图标或快捷键后临时访问当前页面。
 
 ## 安装
 
@@ -23,7 +24,7 @@
 
 ### GitHub Release
 
-1. 从 [Releases](https://github.com/Tudou77826/mermaid-plantuml-selection-preview/releases/latest) 下载 `mermaid-plantuml-selection-preview-0.6.0.zip`。
+1. 从 [Releases](https://github.com/Tudou77826/mermaid-plantuml-selection-preview/releases/latest) 下载名称形如 `mermaid-plantuml-selection-preview-<版本号>.zip` 的文件。
 2. 将 ZIP 解压到固定目录。
 3. 打开 `chrome://extensions`。
 4. 开启右上角“开发者模式”。
@@ -34,9 +35,11 @@
 ## 使用
 
 1. 在网页中选中 Mermaid 或 PlantUML 源码。
-2. 点击右键，选择“预览 Mermaid / PlantUML 图”。
+2. 点击右键菜单“预览 Mermaid / PlantUML 图”，或直接点击扩展图标。
 3. 在浮层中查看、缩放或拖动图表。
 4. 点击浮层外区域、关闭按钮或按 `Esc` 退出。
+
+页面无法提供标准选区时，扩展图标会打开一个极简粘贴框；粘贴源码后按 `Ctrl+Enter` 即可预览。也可以使用 `Ctrl+Shift+M` 打开同一入口，并在 `chrome://extensions/shortcuts` 中修改快捷键。
 
 常用快捷键：
 

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Mermaid & PlantUML 选区预览",
-  "version": "0.6.0",
-  "description": "选中 Mermaid 或 PlantUML 源码后，通过右键菜单在当前页面浮层中安全预览。",
+  "version": "0.7.0",
+  "description": "选中或粘贴 Mermaid、PlantUML 源码，在当前页面浮层中安全预览。",
   "permissions": [
     "activeTab",
     "contextMenus",
@@ -17,7 +17,16 @@
     "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'none'"
   },
   "action": {
-    "default_title": "选中 Mermaid 或 PlantUML 源码后点击右键预览"
+    "default_title": "预览当前选区中的 Mermaid / PlantUML",
+    "default_popup": "action.html"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+M",
+        "mac": "Command+Shift+M"
+      }
+    }
   },
   "icons": {
     "16": "icons/icon-16.png",

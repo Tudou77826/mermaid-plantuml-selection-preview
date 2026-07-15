@@ -26,6 +26,8 @@
 3. 点击“预览 Mermaid / PlantUML 图”。
 4. 在页内浮层中查看图表。
 
+如果页面屏蔽了原生右键菜单，可以直接点击扩展图标或按 `Ctrl+Shift+M`。扩展会尝试读取当前页面及可访问 iframe 中的选区：读取成功时直接显示浮层；读取失败时显示粘贴框，粘贴源码后按 `Ctrl+Enter` 预览。快捷键可在 `chrome://extensions/shortcuts` 中修改。
+
 ![PlantUML 页内浮层预览](images/plantuml-overlay.png)
 
 浮层支持以下操作：
@@ -84,7 +86,7 @@ Bob --> Alice: OK
 
 ### 右键菜单没有出现
 
-确认已经选中文字。若扩展刚安装或更新，请在 `chrome://extensions` 中点击“重新加载”，然后刷新原网页。
+确认已经选中文字。若网站使用自定义右键菜单，请点击扩展图标或按 `Ctrl+Shift+M`。若扩展刚安装或更新，请在 `chrome://extensions` 中点击“重新加载”，然后刷新原网页。
 
 ### 提示没有读取到源码
 

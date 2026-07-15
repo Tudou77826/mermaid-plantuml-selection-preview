@@ -30,6 +30,17 @@ try {
   const extensionId = new URL(worker.url()).host;
   assert.match(extensionId, /^[a-p]{32}$/);
 
+  const actionPage = await context.newPage();
+  await actionPage.goto(`chrome-extension://${extensionId}/action.html`);
+  const manualForm = actionPage.locator("#manual-form");
+  await manualForm.waitFor({ state: "visible" });
+  assert.equal(await actionPage.locator("#source").count(), 1);
+  assert.match(await actionPage.locator("#status").textContent(), /粘贴源码/);
+  const actionArtifactDir = path.join(root, ".artifacts");
+  await mkdir(actionArtifactDir, { recursive: true });
+  await actionPage.screenshot({ path: path.join(actionArtifactDir, "action-fallback-e2e.png") });
+  await actionPage.close();
+
   const overlayPage = await context.newPage();
   await overlayPage.goto(`chrome-extension://${extensionId}/overlay-host.html`);
   const overlayResponse = await worker.evaluate(

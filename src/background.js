@@ -1,4 +1,5 @@
 import { handleContextMenuClick, MENU_ID } from "./preview-request.js";
+import { ACTION_MESSAGE_TYPES, handleActionMessage } from "./action-request.js";
 
 const ENTRY_TTL_MS = 5 * 60 * 1000;
 
@@ -13,6 +14,19 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => handleContextMenuClick(info, tab, chrome));
+
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  if (!ACTION_MESSAGE_TYPES.has(message?.type)) return undefined;
+  handleActionMessage(message, chrome).then(
+    sendResponse,
+    (error) => sendResponse({
+      ok: false,
+      reason: "unexpected",
+      error: error instanceof Error ? error.message : String(error),
+    }),
+  );
+  return true;
+});
 
 chrome.runtime.onStartup.addListener(clearExpiredEntries);
 

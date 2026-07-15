@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图表选区预览</title>
+    <link rel="stylesheet" href="action.css">
+  </head>
+  <body>
+    <main class="panel">
+      <header class="masthead">
+        <div class="brand-mark" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+          <i></i>
+        </div>
+        <div>
+          <p class="eyebrow">LOCAL DIAGRAM VIEWER</p>
+          <h1>选区预览</h1>
+        </div>
+        <span class="formats">M + P</span>
+      </header>
+
+      <section id="scanning" class="scanning" aria-live="polite">
+        <div class="scan-line" aria-hidden="true"></div>
+        <strong>正在读取当前选区</strong>
+        <span>识别 Mermaid 或 PlantUML 源码</span>
+      </section>
+
+      <form id="manual-form" class="manual-form" hidden>
+        <div class="field-heading">
+          <label for="source">粘贴图表源码</label>
+          <span>Mermaid / PlantUML</span>
+        </div>
+        <textarea
+          id="source"
+          name="source"
+          rows="9"
+          spellcheck="false"
+          placeholder="flowchart LR&#10;  A[选中文本] --> B[即时预览]"
+        ></textarea>
+        <p id="status" class="status" aria-live="polite"></p>
+        <button id="render-button" type="submit">
+          <span>渲染图表</span>
+          <kbd>Ctrl ↵</kbd>
+        </button>
+      </form>
+
+      <footer>
+        <span class="privacy-dot" aria-hidden="true"></span>
+        本地渲染，不上传源码
+      </footer>
+    </main>
+    <script type="module" src="action.js"></script>
+  </body>
+</html>

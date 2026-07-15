@@ -12,14 +12,23 @@ export async function handleContextMenuClick(
     return false;
   }
 
-  const requestId = createId();
   const selection = await captureDomSelection(info, tab, chromeApi);
   const language = detectDiagramLanguage(selection);
-  const displayedInPage = await showInPageOverlay(info, tab, selection, chromeApi, language);
-  if (displayedInPage) {
+  const displayedInPage = await renderInPageOverlay(info, tab, selection, chromeApi, language);
+  if (displayedInPage.ok) {
     return true;
   }
 
+  await openPreviewWindow(selection, chromeApi, createId);
+  return true;
+}
+
+export async function openPreviewWindow(
+  selection,
+  chromeApi,
+  createId = () => crypto.randomUUID(),
+) {
+  const requestId = createId();
   // Restricted pages (for example chrome:// pages) cannot accept injected
   // scripts. Keep the original extension window as a functional fallback.
   const storageKey = `preview:${requestId}`;
@@ -44,13 +53,19 @@ export async function handleContextMenuClick(
   return true;
 }
 
-export async function showInPageOverlay(info, tab, selection, chromeApi, language = detectDiagramLanguage(selection)) {
+export async function renderInPageOverlay(
+  info,
+  tab,
+  selection,
+  chromeApi,
+  language = detectDiagramLanguage(selection),
+) {
   if (
     !Number.isInteger(tab?.id) ||
     !chromeApi.scripting?.executeScript ||
     !chromeApi.tabs?.sendMessage
   ) {
-    return false;
+    return { ok: false, reason: "injection", error: "当前页面不允许显示页内预览。" };
   }
 
   const target = { tabId: tab.id };
@@ -75,10 +90,23 @@ export async function showInPageOverlay(info, tab, selection, chromeApi, languag
       { type: `show-${language}-selection-overlay`, selection },
       { frameId },
     );
-    return response?.ok === true;
-  } catch {
-    return false;
+    if (response?.ok === true) return { ok: true, mode: "overlay" };
+    return {
+      ok: false,
+      reason: "render",
+      error: response?.error || "图表源码暂时无法渲染。",
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      reason: "injection",
+      error: error instanceof Error ? error.message : String(error),
+    };
   }
+}
+
+export async function showInPageOverlay(info, tab, selection, chromeApi, language) {
+  return (await renderInPageOverlay(info, tab, selection, chromeApi, language)).ok;
 }
 
 /**

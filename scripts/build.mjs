@@ -10,6 +10,7 @@ await mkdir(output, { recursive: true });
 
 await build({
   entryPoints: {
+    action: path.join(root, "src", "action.js"),
     preview: path.join(root, "src", "preview.js"),
     background: path.join(root, "src", "background.js"),
   },
@@ -48,6 +49,8 @@ await Promise.all([
   cp(path.join(root, "manifest.json"), path.join(output, "manifest.json")),
   cp(path.join(root, "src", "preview.html"), path.join(output, "preview.html")),
   cp(path.join(root, "src", "preview.css"), path.join(output, "preview.css")),
+  cp(path.join(root, "src", "action.html"), path.join(output, "action.html")),
+  cp(path.join(root, "src", "action.css"), path.join(output, "action.css")),
   cp(path.join(root, "src", "overlay-host.html"), path.join(output, "overlay-host.html")),
   cp(path.join(root, "assets", "icons"), path.join(output, "icons"), { recursive: true }),
   cp(
